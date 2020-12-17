@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bwca/ts-template-repo.git"
+    "url": "git+https://https://github.com/Bwca/linkedin-learning-downloader.git"
   },
   "bugs": {
-    "url": "https://github.com/Bwca/ts-template-repo/issues"
+    "url": "https://https://github.com/Bwca/linkedin-learning-downloader/issues"
   },
-  "homepage": "https://github.com/Bwca/ts-template-repo#readme",
+  "homepage": "https://https://github.com/Bwca/linkedin-learning-downloader#readme",
   "devDependencies": {
     "@types/jest": "^25.2.2",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -39,10 +39,11 @@
     "eslint": "^7.0.0",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
-    "parcel-bundler": "^1.12.4",
     "prettier": "2.0.5",
     "terser": "^4.6.13",
     "ts-jest": "^26.0.0",
-    "typescript": "^3.9.2"
-  }
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {}
 }
