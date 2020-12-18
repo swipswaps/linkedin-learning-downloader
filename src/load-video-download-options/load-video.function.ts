@@ -1,5 +1,5 @@
-import { Video, apiService, VideoApiResponse } from '../shared';
-import { VideoRequestParams, VideoRequestHeaders, DownloadableVideo } from './models';
+import { Video, apiService, VideoApiResponse, DownloadableVideo } from '../shared';
+import { VideoRequestParams, VideoRequestHeaders } from './models';
 
 export async function loadVideo(video: Video, params: VideoRequestParams, headers: VideoRequestHeaders): Promise<DownloadableVideo> {
   const { data: videoResponse } = await apiService.get<VideoApiResponse, VideoRequestParams, VideoRequestHeaders>(
