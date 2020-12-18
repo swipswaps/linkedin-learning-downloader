@@ -1,10 +1,17 @@
-import { WELCOME_MESSAGE } from './constants/welcome-message';
-import { promptCourseUrl } from './prompt-course-url/';
+import { WELCOME_MESSAGE } from './constants';
+import { promptCourseUrl } from './prompt-course-url';
+import { messageService } from './shared';
 
 export async function main(): Promise<void> {
-  console.log(WELCOME_MESSAGE);
+  messageService.out({
+    text: WELCOME_MESSAGE,
+    type: 'info',
+  });
 
   const courseUrl = await promptCourseUrl();
 
-  console.log('main function ran, got ' + courseUrl);
+  messageService.out({
+    text: `\nmain function ran, got ${courseUrl}\n`,
+    type: 'success',
+  });
 }
