@@ -2,6 +2,7 @@ import { WELCOME_MESSAGE } from './constants';
 import { loadVideoDownloadOptions } from './load-video-download-options/load-video-download-options.function';
 import { loadVideosList } from './load-videos-list';
 import { promptCourseUrl } from './prompt-course-url';
+import { selectVideoSize } from './select-video-size';
 import { messageService, Video } from './shared';
 
 export async function main(): Promise<void> {
@@ -19,15 +20,11 @@ export async function main(): Promise<void> {
     type: 'success',
   });
 
-  try {
-    const downloadableVideos = await loadVideoDownloadOptions(videosList);
-    console.log(downloadableVideos);
-  } catch (e) {
-    messageService.out({
-      text: e.toString(),
-      type: 'error',
-    });
-  }
+  const downloadableVideos = await loadVideoDownloadOptions(videosList);
+
+  const selectedSize = await selectVideoSize(downloadableVideos);
+
+  console.log(selectedSize);
 }
 
 function formatVideosListForDisplay(videos: Video[]): string {

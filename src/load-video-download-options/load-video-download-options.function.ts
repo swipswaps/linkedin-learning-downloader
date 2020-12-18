@@ -1,6 +1,6 @@
 import { VideosList } from '../shared';
 import { loadVideo } from './load-video.function';
-import { DownloadableVideo } from './models';
+import { DownloadableVideo } from '../shared';
 import { promptHeaders } from './prompt-headers.function';
 
 export async function loadVideoDownloadOptions(videosList: VideosList): Promise<DownloadableVideo[]> {

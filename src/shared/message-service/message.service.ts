@@ -1,8 +1,26 @@
 import readline from 'readline';
+
 import chalk from 'chalk';
+
 import { Message } from './message.model';
 
 class MessageService {
+  public out(message: Message): void {
+    const text = this.messageToColoredString(message);
+    console.log(text);
+  }
+
+  public promptUserInput(question: Message): Promise<string> {
+    return new Promise((resolve) => {
+      const text = this.messageToColoredString(question);
+      const rl = this.readlineInterface;
+      rl.question(text, (answer: string) => {
+        resolve(answer.trim());
+        rl.close();
+      });
+    });
+  }
+
   private get readlineInterface(): readline.Interface {
     return readline.createInterface({
       input: process.stdin,
@@ -27,22 +45,6 @@ class MessageService {
       default:
         return text;
     }
-  }
-
-  public out(message: Message): void {
-    const text = this.messageToColoredString(message);
-    console.log(text);
-  }
-
-  public promptUserInput(question: Message): Promise<string> {
-    return new Promise((resolve) => {
-      const text = this.messageToColoredString(question);
-      const rl = this.readlineInterface;
-      rl.question(text, (answer: string) => {
-        resolve(answer.trim());
-        rl.close();
-      });
-    });
   }
 }
 
