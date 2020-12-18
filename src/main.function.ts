@@ -1,7 +1,8 @@
 import { WELCOME_MESSAGE } from './constants';
-import { loadVideoDownloadOptions } from './load-video-download-options/load-video-download-options.function';
+import { loadVideoDownloadOptions } from './load-video-download-options/';
 import { loadVideosList } from './load-videos-list';
 import { promptCourseUrl } from './prompt-course-url';
+import { promptDownloadFolder } from './prompt-download-folder/';
 import { selectVideoSize } from './select-video-size';
 import { messageService, Video } from './shared';
 
@@ -12,7 +13,6 @@ export async function main(): Promise<void> {
   });
 
   const courseUrl = await promptCourseUrl();
-
   const videosList = await loadVideosList(courseUrl);
 
   messageService.out({
@@ -21,10 +21,19 @@ export async function main(): Promise<void> {
   });
 
   const downloadableVideos = await loadVideoDownloadOptions(videosList);
-
   const selectedSize = await selectVideoSize(downloadableVideos);
 
-  console.log(selectedSize);
+  messageService.out({
+    text: `Selected video width: ${selectedSize}`,
+    type: 'success',
+  });
+
+  const path = await promptDownloadFolder(__dirname);
+
+  messageService.out({
+    text: `Download path: ${path}`,
+    type: 'success',
+  });
 }
 
 function formatVideosListForDisplay(videos: Video[]): string {
