@@ -39,7 +39,7 @@ class MessageService {
       const text = this.messageToColoredString(question);
       const rl = this.readlineInterface;
       rl.question(text, (answer: string) => {
-        resolve(answer);
+        resolve(answer.trim());
         rl.close();
       });
     });
