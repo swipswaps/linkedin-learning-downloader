@@ -1,7 +1,8 @@
 import { WELCOME_MESSAGE } from './constants';
-import { loadVideosList, Video } from './load-videos-list';
+import { loadVideoDownloadOptions } from './load-video-download-options/load-video-download-options.function';
+import { loadVideosList } from './load-videos-list';
 import { promptCourseUrl } from './prompt-course-url';
-import { messageService } from './shared';
+import { messageService, Video } from './shared';
 
 export async function main(): Promise<void> {
   messageService.out({
@@ -17,6 +18,16 @@ export async function main(): Promise<void> {
     text: formatVideosListForDisplay(videosList.videos),
     type: 'success',
   });
+
+  try {
+    const downloadableVideos = await loadVideoDownloadOptions(videosList);
+    console.log(downloadableVideos);
+  } catch (e) {
+    messageService.out({
+      text: e.toString(),
+      type: 'error',
+    });
+  }
 }
 
 function formatVideosListForDisplay(videos: Video[]): string {

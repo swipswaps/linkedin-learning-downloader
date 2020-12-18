@@ -1,7 +1,5 @@
-import { apiService } from '../shared';
-import { VideosList } from './models/videos-list';
+import { apiService, VideosList, Video } from '../shared';
 import { JSDOM } from 'jsdom';
-import { Video } from './models/video';
 
 export async function loadVideosList(url: string): Promise<VideosList> {
   let parentSlug: string;
