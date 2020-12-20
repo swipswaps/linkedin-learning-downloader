@@ -1,10 +1,11 @@
 import { WELCOME_MESSAGE } from './constants';
+import { downloadVideo } from './download-video';
 import { loadVideoDownloadOptions } from './load-video-download-options/';
 import { loadVideosList } from './load-videos-list';
 import { promptCourseUrl } from './prompt-course-url';
 import { promptDownloadFolder } from './prompt-download-folder/';
 import { selectVideoSize } from './select-video-size';
-import { messageService, Video } from './shared';
+import { messageService, ProgressiveStream, Video } from './shared';
 
 export async function main(): Promise<void> {
   messageService.out({
@@ -28,10 +29,25 @@ export async function main(): Promise<void> {
     type: 'success',
   });
 
-  const path = await promptDownloadFolder(__dirname);
+  const downloadFolderPath = await promptDownloadFolder(__dirname);
 
   messageService.out({
-    text: `Download path: ${path}`,
+    text: `Download path: ${downloadFolderPath}`,
+    type: 'success',
+  });
+
+  await Promise.all(
+    downloadableVideos.map(async ({ progressiveStreams, title }, index) => {
+      const selectedSteam = progressiveStreams.find(({ width }) => width === selectedSize) as ProgressiveStream;
+      const fileName = `${++index} ${title.replace(/[/:*?"<>|~#%&+{}\-\\]/g, '')}.${selectedSteam.mediaType.split('/')[1]}`;
+      const videoUrl = selectedSteam?.streamingLocations[0].url as string;
+      const savePath = /\/$/.test(downloadFolderPath) ? `${downloadFolderPath}${fileName}` : `${downloadFolderPath}/${fileName}`;
+      return downloadVideo(videoUrl, savePath, fileName);
+    })
+  );
+
+  messageService.out({
+    text: '\nDownloading finished.',
     type: 'success',
   });
 }
