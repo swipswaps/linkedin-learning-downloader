@@ -5,6 +5,7 @@
   "main": "index.js",
   "files": [],
   "scripts": {
+    "start": "ts-node src",
     "build": "tsc",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest"
