@@ -29,10 +29,10 @@ export async function main(): Promise<void> {
     type: 'success',
   });
 
-  const path = await promptDownloadFolder(__dirname);
+  const downloadFolderPath = await promptDownloadFolder(__dirname);
 
   messageService.out({
-    text: `Download path: ${path}`,
+    text: `Download path: ${downloadFolderPath}`,
     type: 'success',
   });
 
@@ -40,9 +40,9 @@ export async function main(): Promise<void> {
     downloadableVideos.map(async ({ progressiveStreams, title }, index) => {
       const selectedSteam = progressiveStreams.find(({ width }) => width === selectedSize) as ProgressiveStream;
       const fileName = `${++index} ${title.replace(/[/:*?"<>|~#%&+{}\-\\]/g, '')}.${selectedSteam.mediaType.split('/')[1]}`;
-      const downloadPath = selectedSteam?.streamingLocations[0].url as string;
-      const savePath = /\/$/.test(path) ? `${path}${fileName}` : `${path}/${fileName}`;
-      return downloadVideo(downloadPath, savePath, fileName);
+      const videoUrl = selectedSteam?.streamingLocations[0].url as string;
+      const savePath = /\/$/.test(downloadFolderPath) ? `${downloadFolderPath}${fileName}` : `${downloadFolderPath}/${fileName}`;
+      return downloadVideo(videoUrl, savePath, fileName);
     })
   );
 
