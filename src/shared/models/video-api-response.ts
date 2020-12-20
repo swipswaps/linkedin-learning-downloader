@@ -5,7 +5,7 @@ export interface VideoApiResponse {
 
 export interface Element {
   parent: string;
-  visibility: string;
+  visibility: 'FREE' | 'LOCKED';
   transcripts: string;
   entityType: string;
   activatedAt: number;
