@@ -16,4 +16,9 @@ Run it
 
 `npm run start`
 
+Or build it first and run the transpiled version
+
+`npm run build`
+`node dist`
+
 As of yet, requires entering csrf-token and cookie from current session for authorisation.
