@@ -5,14 +5,13 @@ That's a wip for downloading videos from https://www.linkedin.com/learning cours
 Clone the repo
 
 `git clone https://github.com/Bwca/linkedin-learning-downloader.git`
+`cd linkedin-learning-downloader`
 
 And run the built version:
 
 `node dist`
 
 Or install dependencies
-
-`cd linkedin-learning-downloader`
 
 `npm i`
 
