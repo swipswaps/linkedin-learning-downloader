@@ -1,4 +1,4 @@
-export interface VideoRequestHeaders {
+export interface AuthHeaders {
   'csrf-token': string;
   cookie: string;
 }

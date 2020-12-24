@@ -1,8 +1,8 @@
 import { Video, apiService, VideoApiResponse, DownloadableVideo, messageService } from '../shared';
-import { VideoRequestParams, VideoRequestHeaders } from './models';
+import { VideoRequestParams, AuthHeaders } from './models';
 
-export async function loadVideo(video: Video, params: VideoRequestParams, headers: VideoRequestHeaders): Promise<DownloadableVideo> {
-  const { data: videoResponse } = await apiService.get<VideoApiResponse, VideoRequestParams, VideoRequestHeaders>(
+export async function loadVideo(video: Video, params: VideoRequestParams, headers: AuthHeaders): Promise<DownloadableVideo> {
+  const { data: videoResponse } = await apiService.get<VideoApiResponse, VideoRequestParams, AuthHeaders>(
     'https://www.linkedin.com/learning-api/videos',
     params,
     headers
