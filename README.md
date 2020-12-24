@@ -6,19 +6,18 @@ Clone the repo
 
 `git clone https://github.com/Bwca/linkedin-learning-downloader.git`
 
-Install dependencies
+And run the built version:
+
+`node dist`
+
+Or install dependencies
 
 `cd linkedin-learning-downloader`
 
 `npm i`
 
-Run it
+And run it from source:
 
 `npm run start`
-
-Or build it first and run the transpiled version
-
-`npm run build`
-`node dist`
 
 As of yet, requires entering csrf-token and cookie from current session for authorisation.
