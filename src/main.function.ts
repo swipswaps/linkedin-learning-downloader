@@ -11,7 +11,7 @@ export async function main(): Promise<void> {
   let isOver = false;
 
   do {
-    await downloadCourse();
+    await downloadCourse(__dirname);
 
     let userChoiceToContinue: string;
     do {

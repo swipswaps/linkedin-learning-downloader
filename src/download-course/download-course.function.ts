@@ -6,7 +6,7 @@ import { promptDownloadFolder } from '../prompt-download-folder';
 import { selectVideoSize } from '../select-video-size';
 import { messageService, ProgressiveStream, Video } from '../shared';
 
-export async function downloadCourse(): Promise<void> {
+export async function downloadCourse(appRoot: string): Promise<void> {
   const courseUrl = await promptCourseUrl();
   const videosList = await loadVideosList(courseUrl);
 
@@ -23,7 +23,7 @@ export async function downloadCourse(): Promise<void> {
     type: 'success',
   });
 
-  const downloadFolderPath = await promptDownloadFolder(__dirname);
+  const downloadFolderPath = await promptDownloadFolder(appRoot);
 
   messageService.out({
     text: `Download path: ${downloadFolderPath}`,
