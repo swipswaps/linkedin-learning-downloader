@@ -7,9 +7,9 @@ export async function downloadVideos(downloadableVideos: DownloadableVideo[], se
   const totalVideos = downloadableVideos.length;
   const failedDownloads: string[] = [];
   await Promise.all(
-    downloadableVideos.map(async ({ progressiveStreams, title }, index) => {
-      const selectedSteam = progressiveStreams.find(({ width }) => width === selectedSize) as ProgressiveStream;
-      const fileName = `${generateFileName(index, title)}.${selectedSteam.mediaType.split('/')[1]}`;
+    downloadableVideos.map(async (i, index) => {
+      const selectedSteam = i.progressiveStreams.find(({ width }) => width === selectedSize) as ProgressiveStream;
+      const fileName = `${generateFileName(index, i.title)}.${selectedSteam.mediaType.split('/')[1]}`;
       const videoUrl = selectedSteam?.streamingLocations[0].url as string;
       const savePath = getFilePath(downloadFolderPath, fileName);
       try {
