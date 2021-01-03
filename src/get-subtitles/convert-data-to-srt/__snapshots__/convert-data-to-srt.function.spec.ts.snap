@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convertDataToSrt tests Should convert lines to proper .srt string 1`] = `
+"1
+00:00:01,000 --> 00:00:03,006
+Bla bla bla first subtitle.
+
+2
+00:00:03,006
+Bla bla bla next subtitle
+
+"
+`;

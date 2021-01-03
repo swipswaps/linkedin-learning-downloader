@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractSubtitlesFromPage tests Should properly extract lines from html page 1`] = `
+Array [
+  Object {
+    "$type": "",
+    "caption": " - Bla bla bla first subtitle.  ",
+    "transcriptStartAt": 1000,
+  },
+  Object {
+    "$type": "",
+    "caption": " Bla bla bla next subtitle  ",
+    "transcriptStartAt": 3006,
+  },
+]
+`;
