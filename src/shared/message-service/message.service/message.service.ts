@@ -2,7 +2,7 @@ import readline from 'readline';
 
 import chalk from 'chalk';
 
-import { Message } from './message.model';
+import { Message } from '../message.model';
 
 class MessageService {
   public out(message: Message): void {
@@ -19,6 +19,19 @@ class MessageService {
         rl.close();
       });
     });
+  }
+
+  public async promtUserUntilValidInput(question: Message, validate: (userInput: string) => boolean, errorMessage?: Message): Promise<string> {
+    let userInput: string;
+
+    do {
+      userInput = await this.promptUserInput(question);
+      if (errorMessage) {
+        this.out(errorMessage);
+      }
+    } while (!validate(userInput));
+
+    return userInput;
   }
 
   private get readlineInterface(): readline.Interface {
