@@ -16,19 +16,11 @@ export async function downloadVideo(url: string, path: string, fileName: string)
     let error: Error | null = null;
     writer.on('error', (err) => {
       error = err;
-      messageService.out({
-        text: `Could not download file ${fileName}\nDownload error: ${err.toString()}`,
-        type: 'error',
-      });
       writer.close();
       reject(err);
     });
     writer.on('close', () => {
       if (!error) {
-        messageService.out({
-          text: `File successfully downloaded: ${fileName}`,
-          type: 'success',
-        });
         resolve();
       }
     });

@@ -2,13 +2,13 @@ import { Video, apiService, VideoApiResponse, DownloadableVideo, messageService 
 import { VideoRequestParams, AuthHeaders } from './models';
 
 export async function loadVideo(video: Video, params: VideoRequestParams, headers: AuthHeaders): Promise<DownloadableVideo> {
-  const { data: videoResponse } = await apiService.get<VideoApiResponse, VideoRequestParams, AuthHeaders>(
-    'https://www.linkedin.com/learning-api/videos',
-    params,
-    headers
-  );
-
   try {
+    const { data: videoResponse } = await apiService.get<VideoApiResponse, VideoRequestParams, AuthHeaders>(
+      'https://www.linkedin.com/learning-api/videos',
+      params,
+      headers
+    );
+
     const downloadableVideo: DownloadableVideo = {
       title: video.title,
       progressiveStreams: videoResponse.elements
@@ -19,7 +19,7 @@ export async function loadVideo(video: Video, params: VideoRequestParams, header
     return downloadableVideo;
   } catch (e) {
     messageService.out({
-      text: `Could not locate downloadable video with \nhttps://www.linkedin.com/learning-api/videos?parentSlug=${params.parentSlug}&q=slugs&slug=${params.slug}\nMake sure the video is not behind a premium lock.`,
+      text: `Could not locate downloadable video with \nhttps://www.linkedin.com/learning-api/videos?parentSlug=${params.parentSlug}&q=slugs&slug=${params.slug}\nMake sure the video is not behind a premium lock. Response status: ${e.response?.status}`,
       type: 'error',
     });
     throw e;

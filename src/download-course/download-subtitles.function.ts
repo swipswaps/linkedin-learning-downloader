@@ -5,7 +5,6 @@ import { messageService, VideosList } from '../shared';
 import { generateFileName, getFilePath } from './shared';
 
 export async function downloadSubtitles(videosList: VideosList, courseUrl: string, downloadFolderPath: string): Promise<void> {
-    
   let userChoiceToDownloadSubtitles: string;
   do {
     userChoiceToDownloadSubtitles = await messageService.promptUserInput({
@@ -16,6 +15,7 @@ export async function downloadSubtitles(videosList: VideosList, courseUrl: strin
 
   if (/^y$/i.test(userChoiceToDownloadSubtitles)) {
     let downloads = 0;
+    const total = videosList.videos.length;
     await Promise.all(
       videosList.videos.map(async ({ title, slug }, i) => {
         const fileName = `${generateFileName(i, title)}.srt`;
@@ -25,7 +25,17 @@ export async function downloadSubtitles(videosList: VideosList, courseUrl: strin
             throw 'Could not find/parse subtitles';
           }
           const savePath = getFilePath(downloadFolderPath, fileName);
-          return promises.writeFile(savePath, subtitles).then(() => ++downloads);
+          await promises.writeFile(savePath, subtitles);
+          ++downloads;
+
+          messageService.out({
+            text: `File successfully downloaded: ${fileName}`,
+            type: 'success',
+          });
+          messageService.out({
+            text: `Subtitles downloaded: ${downloads} / ${total}`,
+            type: 'success',
+          });
         } catch (e) {
           messageService.out({
             text: `Could not get subtitles for ${fileName}: ${e.toString()}`,
