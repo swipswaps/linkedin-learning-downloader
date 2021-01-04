@@ -1,6 +1,6 @@
-import { WELCOME_MESSAGE } from './constants';
-import { downloadCourse } from './download-course';
-import { messageService } from './shared';
+import { WELCOME_MESSAGE } from '../constants';
+import { downloadCourse } from '../download-course';
+import { messageService } from '../shared';
 
 export async function main(): Promise<void> {
   messageService.out({

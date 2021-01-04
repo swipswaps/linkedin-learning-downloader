@@ -6,7 +6,7 @@
   "files": [],
   "scripts": {
     "start": "ts-node src",
-    "build": "tsup src/index.ts --minify",
+    "build": "tsup src/linkedin-learning-downloader.ts --minify",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest"
   },
