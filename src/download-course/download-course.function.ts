@@ -4,7 +4,7 @@ import { promptCourseUrl } from '../prompt-course-url';
 import { promptDownloadFolder } from '../prompt-download-folder';
 import { selectVideoSize } from '../select-video-size';
 import { messageService, Video } from '../shared';
-import { downloadSubtitles } from './download-subtitles.function';
+import { downloadSubtitles } from './download-subtitles/download-subtitles.function';
 import { downloadVideos } from './download-videos.function';
 
 export async function downloadCourse(appRoot: string): Promise<void> {

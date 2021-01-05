@@ -1,17 +1,17 @@
 import { promises } from 'fs';
 
-import { getSubtitles } from '../get-subtitles';
-import { messageService, VideosList } from '../shared';
-import { generateFileName, getFilePath } from './shared';
+import { getSubtitles } from '../../get-subtitles';
+import { messageService, VideosList } from '../../shared';
+import { generateFileName, getFilePath } from '../shared';
 
 export async function downloadSubtitles(videosList: VideosList, courseUrl: string, downloadFolderPath: string): Promise<void> {
-  let userChoiceToDownloadSubtitles: string;
-  do {
-    userChoiceToDownloadSubtitles = await messageService.promptUserInput({
+  const userChoiceToDownloadSubtitles = await messageService.promtUserUntilValidInput(
+    {
       text: 'Download subtitles? (y/n) ',
       type: 'prompt',
-    });
-  } while (!/^[yn]$/i.test(userChoiceToDownloadSubtitles));
+    },
+    (input: string) => /^[yn]$/i.test(input)
+  );
 
   if (/^y$/i.test(userChoiceToDownloadSubtitles)) {
     let downloads = 0;
