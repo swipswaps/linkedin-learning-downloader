@@ -4,24 +4,15 @@ import { messageService } from '../shared';
 import { validateCourseUrl } from './validate-course-url.function';
 
 export async function promptCourseUrl(): Promise<string> {
-  let courseUrl: string;
-
-  while (true) {
-    courseUrl = await messageService.promptUserInput({
+  return messageService.promtUserUntilValidInput(
+    {
       text: ENTER_COURSE_URL_PROMPT,
       type: 'prompt',
-    });
-
-    const isValidUrl = validateCourseUrl(courseUrl);
-    if (isValidUrl) {
-      break;
-    }
-
-    messageService.out({
+    },
+    (url: string) => validateCourseUrl(url),
+    {
       text: INVALID_COURSE_URL_MESSAGE,
       type: 'error',
-    });
-  }
-
-  return courseUrl;
+    }
+  );
 }

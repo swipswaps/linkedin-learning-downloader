@@ -1,4 +1,4 @@
-import { AuthHeaders, messageService } from '../shared';
+import { AuthHeaders, messageService } from '../../shared';
 
 class AuthService {
   private authHeaders?: AuthHeaders;
@@ -12,21 +12,21 @@ class AuthService {
   }
 
   private async promptUserForTokens(): Promise<AuthHeaders> {
-    let csrfToken: string;
-    do {
-      csrfToken = await messageService.promptUserInput({
+    const csrfToken = await messageService.promtUserUntilValidInput(
+      {
         text: 'Please enter CSRF token:',
         type: 'prompt',
-      });
-    } while (!csrfToken);
+      },
+      Boolean
+    );
 
-    let cookie: string;
-    do {
-      cookie = await messageService.promptUserInput({
+    const cookie = await messageService.promtUserUntilValidInput(
+      {
         text: 'Please enter the cookie:',
         type: 'prompt',
-      });
-    } while (!cookie);
+      },
+      Boolean
+    );
 
     return { 'csrf-token': csrfToken, cookie };
   }

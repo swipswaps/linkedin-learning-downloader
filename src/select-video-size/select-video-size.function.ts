@@ -5,20 +5,13 @@ export async function selectVideoSize(videos: DownloadableVideo[]): Promise<numb
 
   const availableWidths = videos[0].progressiveStreams.map(({ width }) => width).filter((i) => widths.every((j) => j.includes(i)));
 
-  let selectedWidth = 0;
-
-  do {
-    const selected = Number.parseInt(
-      await messageService.promptUserInput({
+  return Number.parseInt(
+    await messageService.promtUserUntilValidInput(
+      {
         text: `\nPlease, select desired video width: ${availableWidths.join(', ')}: `,
         type: 'prompt',
-      })
-    );
-
-    if (Number.isInteger(selected) && availableWidths.includes(selected)) {
-      selectedWidth = selected;
-    }
-  } while (!selectedWidth);
-
-  return selectedWidth;
+      },
+      (input: string) => availableWidths.map(String).includes(input)
+    )
+  );
 }
