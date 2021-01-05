@@ -1,1 +1,1 @@
-export * from './download-course.function';
+export { downloadCourse } from './download-course.function';

@@ -13,13 +13,13 @@ export async function main(): Promise<void> {
   do {
     await downloadCourse(__dirname);
 
-    let userChoiceToContinue: string;
-    do {
-      userChoiceToContinue = await messageService.promptUserInput({
+    const userChoiceToContinue = await messageService.promtUserUntilValidInput(
+      {
         text: 'Download another course? (y/n) ',
         type: 'prompt',
-      });
-    } while (!/^[yn]$/i.test(userChoiceToContinue));
+      },
+      (input: string) => /^[yn]$/i.test(input)
+    );
 
     isOver = /^n$/i.test(userChoiceToContinue);
   } while (!isOver);
