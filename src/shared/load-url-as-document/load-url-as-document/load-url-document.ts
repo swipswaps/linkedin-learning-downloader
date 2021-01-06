@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom';
-import { apiService } from '../../shared';
+import { apiService } from '../../api-service';
 
-export async function loadCoursesDocument(url: string): Promise<Document> {
+export async function loadUrlAsDocument(url: string): Promise<Document> {
   const { data: html } = await apiService.get<string>(url);
 
   const {

@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
-import { apiService } from '../../shared';
-import { loadCoursesDocument } from './load-courses-document';
+import { apiService } from "../../api-service";
+import { loadUrlAsDocument } from './load-url-document';
 
 describe('loadCoursesDocument', () => {
   it('should return js Document from url', async () => {
@@ -10,7 +10,7 @@ describe('loadCoursesDocument', () => {
     jest.spyOn(apiService, 'get').mockResolvedValueOnce({ data: mockHtml() } as AxiosResponse);
 
     // Act
-    const doc = await loadCoursesDocument(url);
+    const doc = await loadUrlAsDocument(url);
 
     // Assert
     expect(doc).toBeTruthy();
