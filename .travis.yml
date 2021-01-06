@@ -19,3 +19,9 @@ jobs:
       script:
         - echo 'Building...'
         - npm run build
+
+stages:
+  - name: test
+    if: type = pull_request
+  - name: build
+    if: type = push AND branch = master
