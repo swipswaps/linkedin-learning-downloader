@@ -1,10 +1,9 @@
-import { WELCOME_MESSAGE } from '../constants';
 import { downloadCourse } from '../download-course';
 import { messageService } from '../shared';
 
 export async function main(): Promise<void> {
   messageService.out({
-    text: WELCOME_MESSAGE,
+    text: '\nWelcome to the Linkedin learning videos downloade v1!',
     type: 'info',
   });
 

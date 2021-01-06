@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node src",
     "build": "tsup src/linkedin-learning-downloader.ts --minify",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint \"./src/**/*.{ts,tsx}\" --quiet --fix",
     "test": "jest"
   },
   "husky": {
@@ -49,7 +49,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "jsdom": "^16.4.0"
   }
