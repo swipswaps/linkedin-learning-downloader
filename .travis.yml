@@ -10,6 +10,11 @@ jobs:
     - stage: install
         - npm ci
 
+    - stage: lint
+      script:
+        - echo 'Linting the branch...'
+        - npm run lint
+
     - stage: test
       script:
         - echo 'Testing the branch...'
@@ -21,7 +26,9 @@ jobs:
         - npm run build
 
 stages:
+  - name: lint
+    if: type = pull_request
   - name: test
     if: type = pull_request
   - name: build
-    if: type = push AND branch = master
+    if: type = pull_request
