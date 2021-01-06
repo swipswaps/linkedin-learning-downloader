@@ -1,0 +1,21 @@
+language: node_js
+
+node_js:
+  - '12.20.0'
+
+cache: npm
+
+jobs:
+  include:
+    - stage: install
+        - npm ci
+
+    - stage: test
+      script:
+        - echo 'Testing the branch...'
+        - npm run test
+
+    - stage: build
+      script:
+        - echo 'Building...'
+        - npm run build
