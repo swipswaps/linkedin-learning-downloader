@@ -14,15 +14,20 @@ export class AuthService {
   }
 
   private async loadTokensFromFile(): Promise<AuthHeaders | void> {
-    const tokensFilePath = `${__dirname}/tokens.json`;
-    if (!existsSync(tokensFilePath)) {
+    const cookieFilePath = `${__dirname}/cookie.token`;
+    const csrfFilePath = `${__dirname}/csrf.token`;
+    if (!existsSync(cookieFilePath) || !existsSync(csrfFilePath)) {
       return;
     }
     try {
-      const fileContent = await promises.readFile(tokensFilePath);
-      const tokens: Partial<AuthHeaders> = JSON.parse(fileContent.toString());
+      const cookie = await promises.readFile(cookieFilePath);
+      const csrf = await promises.readFile(csrfFilePath);
+      const tokens: AuthHeaders = {
+        'csrf-token': csrf.toString(),
+        cookie: cookie.toString(),
+      };
       if (!tokens.cookie || !tokens['csrf-token']) {
-        throw 'Invalid tokens file!';
+        throw 'Invalid tokens!';
       }
       return tokens as AuthHeaders;
     } catch (e) {

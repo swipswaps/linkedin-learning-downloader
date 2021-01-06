@@ -21,15 +21,20 @@ class MessageService {
     });
   }
 
-  public async promtUserUntilValidInput(question: Message, validate: (userInput: string) => boolean, errorMessage?: Message): Promise<string> {
+  public async promtUserUntilValidInput(
+    question: Message,
+    validate: (userInput: string) => boolean,
+    errorMessage?: Message
+  ): Promise<string> {
     let userInput: string;
-
+    let isValidInput = false;
     do {
       userInput = await this.promptUserInput(question);
-      if (errorMessage) {
+      isValidInput = validate(userInput);
+      if (!isValidInput && errorMessage) {
         this.out(errorMessage);
       }
-    } while (!validate(userInput));
+    } while (!isValidInput);
 
     return userInput;
   }
