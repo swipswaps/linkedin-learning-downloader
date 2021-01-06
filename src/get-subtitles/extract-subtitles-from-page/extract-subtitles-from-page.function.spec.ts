@@ -1,12 +1,15 @@
+import { AxiosResponse } from 'axios';
+
+import { parseAxiosResponseToDoc } from '../../shared';
 import { extractSubtitlesFromPage } from './extract-subtitles-from-page.function';
 
 describe('extractSubtitlesFromPage tests', () => {
-  it('Should properly extract lines from html page', () => {
+  it('Should properly extract lines from html page', async () => {
     // Arrange
-    const html = getMockHtml();
+    const doc = await parseAxiosResponseToDoc({ data: getMockHtml() } as AxiosResponse);
 
     // Act
-    const lines = extractSubtitlesFromPage(html);
+    const lines = extractSubtitlesFromPage(doc);
 
     // Assert
     expect(lines).toMatchSnapshot();

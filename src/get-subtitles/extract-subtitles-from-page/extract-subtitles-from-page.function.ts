@@ -1,11 +1,6 @@
-import { JSDOM } from 'jsdom';
-
 import { Included, Line, InlineSubtitles } from '../inline-subtitles.model';
 
-export function extractSubtitlesFromPage(html: string): Line[] {
-  const {
-    window: { document },
-  } = new JSDOM(html);
+export function extractSubtitlesFromPage(document: Document): Line[] {
   const codeBlockWithSubtitles: Element = Array.from(document.querySelectorAll('code[style="display: none"]')).find((i) =>
     i.textContent?.includes('transcriptStartAt')
   ) as Element;
