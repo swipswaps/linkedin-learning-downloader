@@ -44,13 +44,9 @@ describe('AuthService test', () => {
       'csrf-token': csrfToken,
       cookie,
     };
-    jest.spyOn(fs, 'existsSync').mockReturnValueOnce(true);
-    jest.spyOn(fs.promises, 'readFile').mockResolvedValueOnce(`
-    {
-      "csrf-token": "${csrfToken}",
-      "cookie": "${cookie}"
-    }
-    `);
+    jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+    jest.spyOn(fs.promises, 'readFile').mockResolvedValueOnce(cookie);
+    jest.spyOn(fs.promises, 'readFile').mockResolvedValueOnce(csrfToken);
 
     // Act
     const result = await authService.getAuthHeaders();

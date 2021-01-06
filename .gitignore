@@ -3,3 +3,4 @@ downloaded
 .idea
 .vscode
 package-lock.json
+dist/*.token
