@@ -1,0 +1,34 @@
+language: node_js
+
+node_js:
+  - '12.20.0'
+
+cache: npm
+
+jobs:
+  include:
+    - stage: install
+        - npm ci
+
+    - stage: lint
+      script:
+        - echo 'Linting the branch...'
+        - npm run lint
+
+    - stage: test
+      script:
+        - echo 'Testing the branch...'
+        - npm run test
+
+    - stage: build
+      script:
+        - echo 'Building...'
+        - npm run build
+
+stages:
+  - name: lint
+    if: type = pull_request
+  - name: test
+    if: type = pull_request
+  - name: build
+    if: type = pull_request
