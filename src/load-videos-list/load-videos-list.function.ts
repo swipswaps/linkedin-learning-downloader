@@ -1,15 +1,8 @@
-import { apiService, VideosList, Video } from '../shared';
-import { JSDOM } from 'jsdom';
+import { VideosList, Video } from '../shared';
 
-export async function loadVideosList(url: string): Promise<VideosList> {
+export async function loadVideosList(url: string, document: Document): Promise<VideosList> {
   let parentSlug: string;
   parentSlug = url.match(/\/([^/]+)$/)?.[1] as string;
-
-  const { data: html } = await apiService.get<string>(url);
-
-  const {
-    window: { document },
-  } = new JSDOM(html);
 
   const listName = document.title;
 

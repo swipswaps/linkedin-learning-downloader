@@ -1,3 +1,4 @@
+import { loadCoursesDocument } from '../load-courses-document/load-courses-document/load-courses-document';
 import { loadVideoDownloadOptions } from '../load-video-download-options';
 import { loadVideosList } from '../load-videos-list';
 import { promptCourseUrl } from '../prompt-course-url';
@@ -9,7 +10,8 @@ import { downloadVideos } from './download-videos.function';
 
 export async function downloadCourse(appRoot: string): Promise<void> {
   const courseUrl = await promptCourseUrl();
-  const videosList = await loadVideosList(courseUrl);
+  const coursePage = await loadCoursesDocument(courseUrl);
+  const videosList = await loadVideosList(courseUrl, coursePage);
 
   messageService.out({
     text: formatVideosListForDisplay(videosList.videos),
