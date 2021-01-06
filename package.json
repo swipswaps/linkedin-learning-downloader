@@ -7,7 +7,7 @@
   "scripts": {
     "start": "ts-node src",
     "build": "tsup src/linkedin-learning-downloader.ts --minify",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint \"./src/**/*.{ts,tsx}\" --quiet --fix",
     "test": "jest"
   },
   "husky": {
