@@ -2,6 +2,7 @@ import { promises } from 'fs';
 
 import * as subtitlesModule from '../../get-subtitles';
 import * as sharedSubtitlesModule from '../shared';
+import * as generateFileNameModule from '../../shared/generate-filename';
 import { messageService, VideosList } from '../../shared';
 import { downloadSubtitles } from './download-subtitles.function';
 
@@ -39,7 +40,7 @@ describe('downloadSubtitles test', () => {
     const generatedSubtitles = '00:00:00,000\nBla bla bla';
     const getSubtitlesSpy = jest.spyOn(subtitlesModule, 'getSubtitles').mockResolvedValueOnce(generatedSubtitles);
     const generatedFileName = 'generated-file-name';
-    const generateFileNameSpy = jest.spyOn(sharedSubtitlesModule, 'generateFileName').mockReturnValueOnce(generatedFileName);
+    const generateFileNameSpy = jest.spyOn(generateFileNameModule, 'generateFileName').mockReturnValueOnce(generatedFileName);
     const generatedFilePath = './new-subtitles-file.srt';
     const getFilePathSpy = jest.spyOn(sharedSubtitlesModule, 'getFilePath').mockReturnValue(generatedFilePath);
     const promisesSpy = jest.spyOn(promises, 'writeFile').mockResolvedValue(undefined);

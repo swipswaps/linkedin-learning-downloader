@@ -1,9 +1,9 @@
 import { createWriteStream } from 'fs';
 
-import { apiService, messageService } from '..';
+import { apiService, messageService } from '../';
 
-export async function downloadFile(url: string, path: string, fileName: string): Promise<void> {
-  const writer = createWriteStream(path);
+export async function downloadFile(url: string, filePath: string, fileName: string): Promise<void> {
+  const writer = createWriteStream(filePath);
 
   messageService.out({
     text: `Downloading ${fileName} from \n${url}`,

@@ -1,5 +1,5 @@
-import { downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '../shared';
-import { generateFileName, getFilePath } from './shared';
+import { generateFileName, downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '../shared';
+import { getFilePath } from './shared';
 
 export async function downloadVideos(downloadableVideos: DownloadableVideo[], selectedSize: number, downloadFolderPath: string) {
   let totalDownloads: number = 0;

@@ -1,1 +1,1 @@
-export * from './download-file.function';
+export { downloadFile } from './download-file.function';
