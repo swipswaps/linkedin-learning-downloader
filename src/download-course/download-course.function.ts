@@ -3,13 +3,13 @@ import { loadVideosList } from '../load-videos-list';
 import { promptCourseUrl } from '../prompt-course-url';
 import { promptDownloadFolder } from '../prompt-download-folder';
 import { selectVideoSize } from '../select-video-size';
-import { messageService, Video, loadUrlAsDocument } from '../shared';
+import { messageService, Video, parseAxiosResponseToDoc, apiService } from '../shared';
 import { downloadSubtitles } from './download-subtitles/download-subtitles.function';
 import { downloadVideos } from './download-videos.function';
 
 export async function downloadCourse(appRoot: string): Promise<void> {
   const courseUrl = await promptCourseUrl();
-  const coursePage = await loadUrlAsDocument(courseUrl);
+  const coursePage = await apiService.get(courseUrl).then(parseAxiosResponseToDoc);
   const videosList = await loadVideosList(courseUrl, coursePage);
 
   messageService.out({

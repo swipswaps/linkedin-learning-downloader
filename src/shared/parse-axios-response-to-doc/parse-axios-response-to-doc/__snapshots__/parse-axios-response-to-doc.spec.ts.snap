@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`loadCoursesDocument should return js Document from url 1`] = `
+exports[`parseAxiosResponseToDoc should return js Document 1`] = `
 Document {
   "location": Location {
     "assign": [Function],
