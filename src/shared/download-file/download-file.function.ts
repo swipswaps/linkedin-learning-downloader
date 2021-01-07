@@ -6,7 +6,7 @@ export async function downloadFile(url: string, filePath: string, fileName: stri
   const writer = createWriteStream(filePath);
 
   messageService.out({
-    text: `Downloading ${fileName} from \n${url}`,
+    text: `Downloading ${fileName} from \n${url.slice(0, 20)}...`,
     type: 'info',
   });
   const { data } = await apiService.downloadVideoFile(url);

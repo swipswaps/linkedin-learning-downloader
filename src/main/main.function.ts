@@ -14,7 +14,7 @@ export async function main(): Promise<void> {
 
     const userChoiceToContinue = await messageService.promtUserUntilValidInput(
       {
-        text: 'Download another course? (y/n) ',
+        text: '\nDownload another course? (y/n) ',
         type: 'prompt',
       },
       (input: string) => /^[yn]$/i.test(input)
@@ -24,7 +24,7 @@ export async function main(): Promise<void> {
   } while (!isOver);
 
   messageService.out({
-    text: 'Bye bye!',
+    text: 'Bye bye!\n\n',
     type: 'info',
   });
 
