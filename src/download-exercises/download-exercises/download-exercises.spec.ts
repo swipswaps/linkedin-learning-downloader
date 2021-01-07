@@ -12,7 +12,7 @@ describe('downloadExercises', () => {
       window: { document },
     } = new JSDOM(getMockHtml());
     const saveFileSpy = jest.spyOn(downloadFileModule, 'downloadFile').mockResolvedValue(undefined);
-    const dir = './';
+    const dir = '.';
 
     // Act
     await downloadExercises(document, dir);
@@ -20,8 +20,8 @@ describe('downloadExercises', () => {
     // Assert
     expect(saveFileSpy).toHaveBeenCalledTimes(2);
     expect(saveFileSpy.mock.calls).toEqual([
-      ['link_one', dir, '1 File_One.zip'],
-      ['link_two', dir, '2 File_Two.zip'],
+      ['link_one', './1 File_One.zip', '1 File_One.zip'],
+      ['link_two', './2 File_Two.zip', '2 File_Two.zip'],
     ]);
   });
 });
