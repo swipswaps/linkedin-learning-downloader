@@ -1,3 +1,5 @@
+import { authService } from '../auth';
+import { downloadExercises } from '../download-exercises/';
 import { loadVideoDownloadOptions } from '../load-video-download-options';
 import { loadVideosList } from '../load-videos-list';
 import { promptCourseUrl } from '../prompt-course-url';
@@ -33,6 +35,13 @@ export async function downloadCourse(appRoot: string): Promise<void> {
   });
 
   await downloadVideos(downloadableVideos, selectedSize, downloadFolderPath);
+  /** TODO: figure out how to get necessary info with a single request instead
+   *  of the current two requests
+   */
+  const authHeaders = await authService.getAuthHeaders();
+  const authCoursePage = await apiService.get(courseUrl, undefined, authHeaders).then(parseAxiosResponseToDoc);
+
+  await downloadExercises(authCoursePage, downloadFolderPath);
   await downloadSubtitles(videosList, courseUrl, downloadFolderPath);
 }
 

@@ -1,6 +1,5 @@
-import { downloadVideo } from '../download-video';
-import { ProgressiveStream, messageService, DownloadableVideo } from '../shared';
-import { generateFileName, getFilePath } from './shared';
+import { generateFileName, downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '../shared';
+import { getFilePath } from './shared';
 
 export async function downloadVideos(downloadableVideos: DownloadableVideo[], selectedSize: number, downloadFolderPath: string) {
   let totalDownloads: number = 0;
@@ -13,7 +12,7 @@ export async function downloadVideos(downloadableVideos: DownloadableVideo[], se
       const videoUrl = selectedSteam?.streamingLocations[0].url as string;
       const savePath = getFilePath(downloadFolderPath, fileName);
       try {
-        await downloadVideo(videoUrl, savePath, fileName);
+        await downloadFile(videoUrl, savePath, fileName);
         ++totalDownloads;
         messageService.out({
           text: `File successfully downloaded: ${fileName}`,

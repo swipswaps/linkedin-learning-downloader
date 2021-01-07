@@ -1,8 +1,8 @@
 import { promises } from 'fs';
 
 import { getSubtitles } from '../../get-subtitles';
-import { messageService, VideosList } from '../../shared';
-import { generateFileName, getFilePath } from '../shared';
+import { generateFileName, messageService, VideosList } from '../../shared';
+import { getFilePath } from '../shared';
 
 export async function downloadSubtitles(videosList: VideosList, courseUrl: string, downloadFolderPath: string): Promise<void> {
   const userChoiceToDownloadSubtitles = await messageService.promtUserUntilValidInput(
