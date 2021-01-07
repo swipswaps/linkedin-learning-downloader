@@ -7,7 +7,7 @@ import { getFilePath } from '../shared';
 export async function downloadSubtitles(videosList: VideosList, courseUrl: string, downloadFolderPath: string): Promise<void> {
   const userChoiceToDownloadSubtitles = await messageService.promtUserUntilValidInput(
     {
-      text: 'Download subtitles? (y/n) ',
+      text: '\nDownload subtitles? (y/n) ',
       type: 'prompt',
     },
     (input: string) => /^[yn]$/i.test(input)
@@ -34,7 +34,7 @@ export async function downloadSubtitles(videosList: VideosList, courseUrl: strin
           });
           messageService.out({
             text: `Subtitles downloaded: ${downloads} / ${total}`,
-            type: 'success',
+            type: 'info',
           });
         } catch (e) {
           messageService.out({

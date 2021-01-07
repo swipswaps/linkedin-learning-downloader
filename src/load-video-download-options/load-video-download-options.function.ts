@@ -10,7 +10,7 @@ export async function loadVideoDownloadOptions(videosList: VideosList): Promise<
 
   /** Basically a crutch against 429 error which prevents too many connections */
   const timeoutStep = 15000;
-  let msTimeout = 45000;
+  let msTimeout = 15000;
 
   const downloadableVideos: DownloadableVideo[] = [];
 

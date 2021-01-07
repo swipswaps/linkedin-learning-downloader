@@ -1,4 +1,4 @@
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 
 import { messageService } from '../shared';
 
@@ -17,10 +17,23 @@ export async function promptDownloadFolder(currentPath: string): Promise<string>
 
     if (!existsSync(inputPath)) {
       messageService.out({
-        text: '\nError: folder does not exist!',
-        type: 'error',
+        text: '\nFolder does not exist, trying to create it...',
+        type: 'info',
       });
-      continue;
+
+      try {
+        mkdirSync(inputPath);
+        messageService.out({
+          text: 'Folder created!',
+          type: 'success',
+        });
+      } catch (e) {
+        messageService.out({
+          text: `Error while trying to create folder: ${e.toString()}`,
+          type: 'error',
+        });
+        continue;
+      }
     }
 
     path = inputPath;

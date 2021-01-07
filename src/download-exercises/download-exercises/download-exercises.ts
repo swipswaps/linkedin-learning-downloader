@@ -20,7 +20,12 @@ export async function downloadExercises(document: Document, dir: string): Promis
 
   if (!exerciseFilesItem || !exerciseFilesItem.exerciseFiles?.length) {
     messageService.out({
-      text: 'No exercises found for the course.',
+      text: '\nNo exercises found for the course.',
+      type: 'info',
+    });
+  } else {
+    messageService.out({
+      text: `\nFound ${exerciseFilesItem.exerciseFiles.length} exercises, downloading...`,
       type: 'info',
     });
   }
@@ -29,14 +34,16 @@ export async function downloadExercises(document: Document, dir: string): Promis
   await Promise.all(
     exerciseFilesItem.exerciseFiles!.map((i, j) =>
       downloadExercise(i, dir, j)
-        .then((fileName) =>
+        .then((fileName) => {
           messageService.out({
-            text: `${fileName} has been downloaded.\n Download progress: ${++downloadProgress} / ${
-              exerciseFilesItem.exerciseFiles!.length
-            }`,
+            text: `${fileName} has been downloaded.`,
             type: 'success',
-          })
-        )
+          });
+          messageService.out({
+            text: `Download progress: ${++downloadProgress} / ${exerciseFilesItem.exerciseFiles!.length}`,
+            type: 'info',
+          });
+        })
         .catch((e: string) =>
           messageService.out({
             text: e,

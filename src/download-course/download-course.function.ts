@@ -30,8 +30,8 @@ export async function downloadCourse(appRoot: string): Promise<void> {
   const downloadFolderPath = await promptDownloadFolder(appRoot);
 
   messageService.out({
-    text: `Download path: ${downloadFolderPath}`,
-    type: 'success',
+    text: `Download path: ${downloadFolderPath}\n`,
+    type: 'info',
   });
 
   await downloadVideos(downloadableVideos, selectedSize, downloadFolderPath);
