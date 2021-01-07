@@ -9,26 +9,60 @@ export async function loadVideoDownloadOptions(videosList: VideosList): Promise<
   const headers = await authService.getAuthHeaders();
 
   /** Basically a crutch against 429 error which prevents too many connections */
-  const msTimeout = 40000;
-  const step = 30;
-  let currentIndex = 0;
-  let videosSlice: Video[];
+  const timeoutStep = 15000;
+  let msTimeout = 45000;
+
   const downloadableVideos: DownloadableVideo[] = [];
+
+  let failedVideoRequests: Video[] = [];
   do {
-    videosSlice = videosList.videos.slice(currentIndex, currentIndex + step);
-    currentIndex += step;
-    const downloadableBatch = await Promise.all(videosSlice.map(async (i) => loadVideo(i, { parentSlug, q, slug: i.slug }, headers)));
-    if (videosSlice.length === step) {
-      await new Promise((resolve) => {
+    const videos = failedVideoRequests.length ? failedVideoRequests : videosList.videos;
+
+    for (const video of videos) {
+      messageService.out({
+        text: `Requesting video options for ${video.title}...`,
+        type: 'info',
+      });
+      try {
+        const vid = await loadVideo(video, { parentSlug, q, slug: video.slug }, headers);
+        downloadableVideos.push(vid);
+        failedVideoRequests = failedVideoRequests.filter(({ slug }) => slug !== video.slug);
         messageService.out({
-          text: `\nSleeping for ${msTimeout / 1000} seconds to prevent 429 server error\n`,
-          type: 'info'
+          text: 'Success!',
+          type: 'success',
         });
-        setTimeout(() => resolve(true), msTimeout);
+      } catch (e) {
+        const isError429 = e?.response?.status === 429;
+        if (!isError429) {
+          throw e;
+        } else {
+          messageService.out({
+            text: 'Encountered error 429: too many requests',
+            type: 'error',
+          });
+        }
+
+        failedVideoRequests.push(video);
+        await new Promise((resolve) => {
+          messageService.out({
+            text: `\nSleeping for ${msTimeout / 1000} seconds before continuing to prevent 429 error\nVideos resolved: ${
+              downloadableVideos.length
+            } / ${videosList.videos.length}`,
+            type: 'info',
+          });
+          msTimeout += timeoutStep;
+          setTimeout(() => resolve(true), msTimeout);
+        });
+      }
+    }
+
+    if (failedVideoRequests.length) {
+      messageService.out({
+        text: `Retrying requests for ${failedVideoRequests.length} videos...`,
+        type: 'info',
       });
     }
-    downloadableVideos.push(...downloadableBatch);
-  } while (videosSlice.length);
+  } while (failedVideoRequests.length);
 
   return downloadableVideos;
 }
