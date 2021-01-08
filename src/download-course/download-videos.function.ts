@@ -1,10 +1,16 @@
 import { generateFileName, downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '../shared';
 import { getFilePath } from './shared';
 
-export async function downloadVideos(downloadableVideos: DownloadableVideo[], selectedSize: number, downloadFolderPath: string) {
+export async function downloadVideos(
+  downloadableVideos: DownloadableVideo[],
+  selectedSize: number,
+  downloadFolderPath: string
+): Promise<void> {
   let totalDownloads: number = 0;
   const totalVideos = downloadableVideos.length;
   const failedDownloads: string[] = [];
+  const failedVideos: DownloadableVideo[] = [];
+
   await Promise.all(
     downloadableVideos.map(async (i, index) => {
       const selectedSteam = i.progressiveStreams.find(({ width }) => width === selectedSize) as ProgressiveStream;
@@ -28,6 +34,7 @@ export async function downloadVideos(downloadableVideos: DownloadableVideo[], se
           type: 'error',
         });
         failedDownloads.push(`${fileName}\n${videoUrl}`);
+        failedVideos.push(i);
       }
     })
   );
@@ -42,5 +49,17 @@ export async function downloadVideos(downloadableVideos: DownloadableVideo[], se
       text: `\nUnfortunately, ${failedDownloads.length} videos could not be downloaded: ${failedDownloads.join('\n')}`,
       type: 'error',
     });
+
+    const doRetryFailedDownloads = await messageService.promtUserUntilValidInput(
+      {
+        text: 'Retry failed downloads?',
+        type: 'prompt',
+      },
+      (userInput: string) => /^[yn]$/i.test(userInput)
+    );
+
+    if (/y/i.test(doRetryFailedDownloads)) {
+      await downloadVideos(failedVideos, selectedSize, downloadFolderPath);
+    }
   }
 }
