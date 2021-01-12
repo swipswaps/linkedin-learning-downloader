@@ -52,7 +52,7 @@ export async function downloadVideos(
 
     const doRetryFailedDownloads = await messageService.promtUserUntilValidInput(
       {
-        text: 'Retry failed downloads?',
+        text: 'Retry failed downloads (y/n)? ',
         type: 'prompt',
       },
       (userInput: string) => /^[yn]$/i.test(userInput)

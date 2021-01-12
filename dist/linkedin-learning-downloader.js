@@ -21,7 +21,7 @@ Finished downloading subtitles: ${i} / ${t.videos.length}.`,type:"success"})}})}
 ${u}`),c.push(l)}}))),n.out({text:`
 Finished downloading videos: ${r} / ${t.length}`,type:"success"}),s.length){n.out({text:`
 Unfortunately, ${s.length} videos could not be downloaded: ${s.join(`
-`)}`,type:"error"});let l=yield n.promtUserUntilValidInput({text:"Retry failed downloads?",type:"prompt"},d=>/^[yn]$/i.test(d));/y/i.test(l)&&(yield D(c,e,o))}})}function A(t){return a(this,null,function*(){let e=yield $(),o=yield f.get(e).then(y),r=yield M(e,o);n.out({text:Z(r.videos),type:"success"});let i=yield L(r),s=yield V(i);n.out({text:`Selected video width: ${s}`,type:"success"});let c=yield q(t);n.out({text:`Download path: ${c}
+`)}`,type:"error"});let l=yield n.promtUserUntilValidInput({text:"Retry failed downloads (y/n)? ",type:"prompt"},d=>/^[yn]$/i.test(d));/y/i.test(l)&&(yield D(c,e,o))}})}function A(t){return a(this,null,function*(){let e=yield $(),o=yield f.get(e).then(y),r=yield M(e,o);n.out({text:Z(r.videos),type:"success"});let i=yield L(r),s=yield V(i);n.out({text:`Selected video width: ${s}`,type:"success"});let c=yield q(t);n.out({text:`Download path: ${c}
 `,type:"info"}),yield D(i,s,c);let l=yield w.getAuthHeaders(),d=yield f.get(e,void 0,l).then(y);yield P(d,c),yield B(r,e,c)})}function Z(t){return`
 Found ${t.length} videos:
 
