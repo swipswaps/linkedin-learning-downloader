@@ -1,4 +1,7 @@
+import { AxiosError } from 'axios';
+
 import { downloadCourse } from '../download-course';
+import { handleCourseDownloadError } from '../handle-course-download-error';
 import { messageService } from '../shared';
 
 export async function main(): Promise<void> {
@@ -10,7 +13,11 @@ export async function main(): Promise<void> {
   let isOver = false;
 
   do {
-    await downloadCourse(__dirname);
+    try {
+      await downloadCourse(__dirname);
+    } catch (e) {
+      handleCourseDownloadError(e as AxiosError);
+    }
 
     const userChoiceToContinue = await messageService.promtUserUntilValidInput(
       {
