@@ -23,12 +23,13 @@ export async function downloadExercises(document: Document, dir: string): Promis
       text: '\nNo exercises found for the course.',
       type: 'info',
     });
-  } else {
-    messageService.out({
-      text: `\nFound ${exerciseFilesItem.exerciseFiles.length} exercises, downloading...`,
-      type: 'info',
-    });
+    return;
   }
+
+  messageService.out({
+    text: `\nFound ${exerciseFilesItem.exerciseFiles.length} exercises, downloading...`,
+    type: 'info',
+  });
 
   let downloadProgress = 0;
   await Promise.all(
