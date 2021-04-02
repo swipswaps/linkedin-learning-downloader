@@ -17,7 +17,7 @@ it('Should return parsed config if it reads the file', async () => {
   // Arrange
   const rootDir = './';
   jest.spyOn(fs, 'existsSync').mockReturnValue(true);
-  jest.spyOn(fs.promises, 'readFile').mockResolvedValueOnce('{"courses": []}');
+  jest.spyOn(fs.promises, 'readFile').mockResolvedValueOnce('{"courses": ["http://google.com"]}');
 
   // Act
   const result = await getDownloadConfig(rootDir);
