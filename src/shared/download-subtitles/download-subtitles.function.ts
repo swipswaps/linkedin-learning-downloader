@@ -1,17 +1,26 @@
 import { promises } from 'fs';
 
-import { getSubtitles } from '../../get-subtitles';
-import { generateFileName, messageService, VideosList } from '../../shared';
-import { getFilePath } from '../shared';
+import { getSubtitles } from '../get-subtitles';
+import { getFilePath } from '../get-file-path';
+import { messageService } from '../message-service';
+import { generateFileName } from '../generate-filename';
+import { VideosList, YayOrNay } from '../models';
 
-export async function downloadSubtitles(videosList: VideosList, courseUrl: string, downloadFolderPath: string): Promise<void> {
-  const userChoiceToDownloadSubtitles = await messageService.promtUserUntilValidInput(
-    {
-      text: '\nDownload subtitles? (y/n) ',
-      type: 'prompt',
-    },
-    (input: string) => /^[yn]$/i.test(input)
-  );
+export async function downloadSubtitles(
+  videosList: VideosList,
+  courseUrl: string,
+  downloadFolderPath: string,
+  doDownloadSubtitles?: YayOrNay
+): Promise<void> {
+  const userChoiceToDownloadSubtitles =
+    doDownloadSubtitles ??
+    (await messageService.promtUserUntilValidInput(
+      {
+        text: '\nDownload subtitles? (y/n) ',
+        type: 'prompt',
+      },
+      (input: string) => /^[yn]$/i.test(input)
+    ));
 
   if (/^y$/i.test(userChoiceToDownloadSubtitles)) {
     let downloads = 0;

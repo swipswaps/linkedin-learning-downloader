@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { parseAxiosResponseToDoc } from '../../shared';
+import { parseAxiosResponseToDoc } from '../..';
 import { extractSubtitlesFromPage } from './extract-subtitles-from-page.function';
 
 describe('extractSubtitlesFromPage tests', () => {

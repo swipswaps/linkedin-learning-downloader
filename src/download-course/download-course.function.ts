@@ -5,9 +5,7 @@ import { loadVideosList } from '../load-videos-list';
 import { promptCourseUrl } from '../prompt-course-url';
 import { promptDownloadFolder } from '../prompt-download-folder';
 import { selectVideoSize } from '../select-video-size';
-import { messageService, Video, parseAxiosResponseToDoc, apiService } from '../shared';
-import { downloadSubtitles } from './download-subtitles/download-subtitles.function';
-import { downloadVideos } from './download-videos.function';
+import { messageService, Video, parseAxiosResponseToDoc, apiService, downloadVideos, downloadSubtitles } from '../shared';
 
 export async function downloadCourse(appRoot: string): Promise<void> {
   const courseUrl = await promptCourseUrl();

@@ -1,10 +1,12 @@
-import { generateFileName, downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '../shared';
-import { getFilePath } from './shared';
+import { generateFileName, downloadFile, ProgressiveStream, messageService, DownloadableVideo } from '..';
+import { getFilePath } from '../get-file-path';
+import { YayOrNay } from '../models';
 
 export async function downloadVideos(
   downloadableVideos: DownloadableVideo[],
   selectedSize: number,
-  downloadFolderPath: string
+  downloadFolderPath: string,
+  doAutoRetryFailed?: YayOrNay
 ): Promise<void> {
   let totalDownloads: number = 0;
   const totalVideos = downloadableVideos.length;
@@ -50,13 +52,15 @@ export async function downloadVideos(
       type: 'error',
     });
 
-    const doRetryFailedDownloads = await messageService.promtUserUntilValidInput(
-      {
-        text: 'Retry failed downloads (y/n)? ',
-        type: 'prompt',
-      },
-      (userInput: string) => /^[yn]$/i.test(userInput)
-    );
+    const doRetryFailedDownloads =
+      doAutoRetryFailed ??
+      (await messageService.promtUserUntilValidInput(
+        {
+          text: 'Retry failed downloads (y/n)? ',
+          type: 'prompt',
+        },
+        (userInput: string) => /^[yn]$/i.test(userInput)
+      ));
 
     if (/y/i.test(doRetryFailedDownloads)) {
       await downloadVideos(failedVideos, selectedSize, downloadFolderPath);

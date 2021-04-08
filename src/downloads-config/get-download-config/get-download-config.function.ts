@@ -1,7 +1,7 @@
 import { promises, existsSync } from 'fs';
-import { DOWNLOAD_CONFIG_NAME } from '../download-config-name.const';
 
-import { DownloadConfig } from '../download-config.model';
+import { DOWNLOAD_CONFIG_NAME } from '../download-config-name.const';
+import { DownloadConfig } from '../../shared/models';
 
 export async function getDownloadConfig(rootDir: string): Promise<DownloadConfig | null> {
   const configPath = `${rootDir}/${DOWNLOAD_CONFIG_NAME}`;

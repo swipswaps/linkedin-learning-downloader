@@ -1,5 +1,5 @@
-import { authService } from '../auth';
-import { apiService, AuthHeaders, parseAxiosResponseToDoc } from '../shared';
+import { authService } from '../../auth';
+import { apiService, AuthHeaders, parseAxiosResponseToDoc } from '..';
 import { convertDataToSrt } from './convert-data-to-srt/convert-data-to-srt.function';
 import { extractSubtitlesFromPage } from './extract-subtitles-from-page/extract-subtitles-from-page.function';
 

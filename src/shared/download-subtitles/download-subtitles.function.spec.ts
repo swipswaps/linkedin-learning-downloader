@@ -1,9 +1,9 @@
 import { promises } from 'fs';
 
-import * as subtitlesModule from '../../get-subtitles';
-import * as sharedSubtitlesModule from '../shared';
-import * as generateFileNameModule from '../../shared/generate-filename';
-import { messageService, VideosList } from '../../shared';
+import * as subtitlesModule from '../get-subtitles';
+import * as sharedSubtitlesModule from '../get-file-path';
+import * as generateFileNameModule from '../generate-filename';
+import { messageService, VideosList } from '..';
 import { downloadSubtitles } from './download-subtitles.function';
 
 describe('downloadSubtitles test', () => {
